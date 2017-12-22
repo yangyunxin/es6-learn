@@ -1,4 +1,5 @@
 ## 搭建es6开发环境
+> 一个学习es6的demo
 
 ### 命令行参数设置
 - 命令行参数使用[yargs](https://github.com/yargs/yargs)库，用法如下：
@@ -15,7 +16,7 @@ const args = yargs
 ````
 在gulpfile.babel.js中就可以使用args.production获取命令行参数
 
-### 配置js模块开发环境
+### 配置js模块开发
 - 用webpack对js文件进去es6编译，livereload实现浏览器自动刷新（用browsersync要实现以下）
 ````
 gulp.task('scripts', () => {
@@ -53,5 +54,25 @@ gulp.task('scripts', () => {
 gulp.task('watch', () => {
     livereload.listen()
     gulp.watch('app/js/index.js', ['scripts'])
+})
+````
+
+### 配置ejs文件开发
+- 开发环境下对ejs文件仅仅做复制和改动监听
+````
+gulp.task('pages', () => {
+    return gulp.src('app/**/*.ejs')
+    .pipe(gulp.dest('server/'))
+    .pipe(gulpif(args.watch, livereload()))
+})
+````
+
+### 配置css文件开发
+- 开发环境下对css文件仅仅做复制和改动监听
+````
+gulp.task('css', () => {
+    return gulp.src('app/**/*.css')
+    .pipe(gulp.dest('server/public'))
+    .pipe(gulpif(args.watch, livereload()))
 })
 ````
