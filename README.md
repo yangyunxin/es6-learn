@@ -76,3 +76,16 @@ gulp.task('css', () => {
     .pipe(gulpif(args.watch, livereload()))
 })
 ````
+
+### 配置启动express服务器
+- 启动express，对css, js, ejs进行监听，去掉livereload对js css ejs监听
+````
+const server = gls.new(['--harmony', 'server/bin/www']);
+server.start();
+gulp.watch(['server/public/**/*.js', 'server/public/**/*.css', 'server/views/**/*.ejs'], (file) => {
+    server.notify.apply(server, [file])
+})
+gulp.watch(['server/routes/**/*.js', 'server/app.js'], () => {
+    server.start.bind(server)()
+})
+````

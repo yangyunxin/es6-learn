@@ -1,2 +1,1 @@
-var a = 'aaaaddssssaaass'
-console.log(a)
+import './class/lesson1.js'
